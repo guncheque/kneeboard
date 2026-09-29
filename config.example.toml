@@ -1,0 +1,40 @@
+# Kneeboard config. Copy to ~/.config/kneeboard/config.toml (or keep next to server.py).
+
+host = "0.0.0.0"          # listen on the LAN so the tablet can reach it
+port = 8420
+docs_dir = "~/Documents/kneeboard"   # PDFs / PNG / JPG / WebP; subfolders become groups
+
+# One [[device]] block per physical device (stick, throttle, button box...).
+# `match` is a case-insensitive substring of the device name, or a
+# /dev/input/by-id/... path when two devices share a name.
+#
+# Find names and button codes with:
+#   python server.py --list-devices
+#   python server.py --learn
+#
+# Binding keys:
+#   "BTN_TRIGGER_HAPPY5"       plain button
+#   "ABS_HAT1Y:-1"             hat direction (-1 = up/left, 1 = down/right)
+#   "mod+BTN_TRIGGER_HAPPY5"   only while a modifier button is held
+#
+# Actions: next_page, prev_page, first_page, next_doc, prev_doc,
+#          toggle_night, toggle_fit, rescan
+#
+# The game still sees every press. Pick buttons DCS doesn't use, or put the
+# kneeboard on a modifier layer: with a modifier held, only mod+ bindings fire.
+
+[[device]]
+match = "WINCTRL"
+modifier = "BTN_TRIGGER_HAPPY20"   # e.g. a pinky switch
+
+[device.bindings]
+"mod+ABS_HAT1X:1"  = "next_page"
+"mod+ABS_HAT1X:-1" = "prev_page"
+"mod+ABS_HAT1Y:1"  = "next_doc"
+"mod+ABS_HAT1Y:-1" = "prev_doc"
+"mod+BTN_TRIGGER_HAPPY21" = "toggle_night"
+
+# [[device]]
+# match = "/dev/input/by-id/usb-XXXX-event-joystick"
+# [device.bindings]
+# "BTN_BASE3" = "next_page"

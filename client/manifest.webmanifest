@@ -1,0 +1,12 @@
+{
+  "name": "Kneeboard",
+  "short_name": "Kneeboard",
+  "start_url": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#101214",
+  "theme_color": "#101214",
+  "icons": [
+    { "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

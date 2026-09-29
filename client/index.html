@@ -1,0 +1,44 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: MIT · Copyright (c) 2026 GracelessDev -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#101214">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="/static/manifest.webmanifest">
+<link rel="icon" href="/static/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/static/style.css">
+<title>Kneeboard</title>
+</head>
+<body>
+  <main id="viewer">
+    <img id="page" alt="">
+    <div id="empty" hidden>
+      <p><strong>No documents yet.</strong></p>
+      <p>Drop PDFs or images into the kneeboard folder on your PC. They'll appear here automatically.</p>
+    </div>
+    <div class="zone" id="zone-prev" aria-label="Previous page"></div>
+    <div class="zone" id="zone-mid" aria-label="Show controls"></div>
+    <div class="zone" id="zone-next" aria-label="Next page"></div>
+  </main>
+
+  <header id="bar">
+    <button id="btn-docs" title="Documents">☰</button>
+    <div id="title"><span id="doc-name">—</span><span id="page-num"></span></div>
+    <button id="btn-fit" title="Fit page / fit width">⇔</button>
+    <button id="btn-night" title="Night mode">☾</button>
+    <button id="btn-full" title="Fullscreen">⛶</button>
+    <span id="conn" title="Connection"></span>
+  </header>
+
+  <aside id="drawer" hidden>
+    <ul id="doc-list"></ul>
+  </aside>
+
+  <div id="toast" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

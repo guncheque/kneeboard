@@ -1,0 +1,85 @@
+/* SPDX-License-Identifier: MIT · Copyright (c) 2026 GracelessDev */
+:root {
+  --bg: #101214;
+  --panel: rgba(22, 25, 28, 0.94);
+  --text: #e6e8ea;
+  --muted: #8b9298;
+  --accent: #f0a53a;
+  --ok: #4cc27a;
+  --bad: #e5534b;
+  --bar-h: 52px;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+[hidden] { display: none !important; }
+html, body {
+  margin: 0; height: 100%; background: var(--bg); color: var(--text);
+  font: 16px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overscroll-behavior: none; user-select: none; -webkit-user-select: none;
+}
+
+/* ---- viewer ---- */
+#viewer { position: fixed; inset: 0; overflow: hidden; background: var(--bg); }
+#page {
+  display: block; width: 100%; height: 100%; object-fit: contain;
+  background: transparent; transition: filter .2s;
+}
+body.fit-width #viewer { overflow-y: auto; }
+body.fit-width #page { height: auto; object-fit: initial; }
+body.night #page { filter: invert(1) hue-rotate(180deg) brightness(.85) contrast(.95); }
+body.night { --bg: #000; }
+
+#empty {
+  position: absolute; inset: 0; display: grid; place-content: center;
+  text-align: center; padding: 0 32px; color: var(--muted);
+}
+#empty strong { color: var(--text); }
+
+/* tap zones: left third back, right third forward, middle toggles the bar */
+.zone { position: fixed; top: 0; bottom: 0; }
+#zone-prev { left: 0; width: 30%; }
+#zone-mid  { left: 30%; width: 40%; }
+#zone-next { right: 0; width: 30%; }
+body.fit-width .zone { pointer-events: none; } /* let the page scroll; use the bar */
+body.fit-width #zone-mid { pointer-events: auto; top: 30%; bottom: 30%; }
+
+/* ---- top bar ---- */
+#bar {
+  position: fixed; top: 0; left: 0; right: 0; height: calc(var(--bar-h) + env(safe-area-inset-top));
+  padding: env(safe-area-inset-top) 8px 0; display: flex; align-items: center; gap: 4px;
+  background: var(--panel); backdrop-filter: blur(8px);
+  transform: translateY(-100%); transition: transform .2s ease; z-index: 10;
+}
+body.ui #bar { transform: none; }
+#bar button {
+  min-width: 44px; height: 44px; border: 0; border-radius: 10px; background: transparent;
+  color: var(--text); font-size: 22px; cursor: pointer;
+}
+#bar button:active { background: rgba(255,255,255,.08); }
+body.night #btn-night, body.fit-width #btn-fit { color: var(--accent); }
+#title { flex: 1; min-width: 0; display: flex; gap: 10px; align-items: baseline; padding: 0 6px; }
+#doc-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+#page-num { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#conn { width: 10px; height: 10px; border-radius: 50%; background: var(--bad); margin: 0 8px; flex: none; }
+#conn.ok { background: var(--ok); }
+
+/* ---- drawer ---- */
+#drawer {
+  position: fixed; top: calc(var(--bar-h) + env(safe-area-inset-top)); left: 0; bottom: 0;
+  width: min(360px, 85vw); background: var(--panel); overflow-y: auto; z-index: 9;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+#doc-list { list-style: none; margin: 0; padding: 6px 0; }
+#doc-list li {
+  padding: 12px 18px; display: flex; justify-content: space-between; gap: 12px; cursor: pointer;
+}
+#doc-list li:active { background: rgba(255,255,255,.06); }
+#doc-list li.active { color: var(--accent); }
+#doc-list .folder { color: var(--muted); }
+#doc-list .count { color: var(--muted); font-size: 14px; flex: none; }
+
+/* ---- toast (page flip feedback when the bar is hidden) ---- */
+#toast {
+  position: fixed; bottom: calc(24px + env(safe-area-inset-bottom)); left: 50%;
+  transform: translateX(-50%); background: var(--panel); padding: 8px 16px; border-radius: 999px;
+  font-variant-numeric: tabular-nums; z-index: 11; pointer-events: none;
+}
